@@ -1,5 +1,6 @@
 package com.hisfrontend.view.login;
 
+import com.hisfrontend.view.DefiniedView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
@@ -9,7 +10,7 @@ import com.vaadin.flow.router.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Route
+@Route("/")
 public class LoginPage extends VerticalLayout {
     Label hisLabel = new Label("HIS SYSTEM");
     TextField usernameField = new TextField("Username: ");
@@ -18,7 +19,8 @@ public class LoginPage extends VerticalLayout {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
     public LoginPage() {
         addStyle();
-        add(hisLabel, usernameField, passwordField, loginBtn);
+        add(hisLabel, usernameField, passwordField, loginBtn, DefiniedView.drawFooter());
+
 
         loginBtn.addClickListener(event -> {
             LOGGER.info("Próba zalogowania");
@@ -27,7 +29,7 @@ public class LoginPage extends VerticalLayout {
     }
 
     private void addStyle(){
-        hisLabel.getStyle().set("color", "blue");
+        hisLabel.getStyle().set("color", DefiniedView.HIS_COLOR);
         hisLabel.getStyle().set("font-size", "100px");
         hisLabel.getStyle().set("font-weight", "bold");
         hisLabel.getStyle().set("margin", "auto");
