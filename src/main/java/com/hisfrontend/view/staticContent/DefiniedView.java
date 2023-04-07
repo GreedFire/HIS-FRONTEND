@@ -1,4 +1,4 @@
-package com.hisfrontend.view;
+package com.hisfrontend.view.staticContent;
 
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
