@@ -1,7 +1,9 @@
 package com.hisfrontend.view;
 
 import com.hisfrontend.UrlGenerator;
+import com.hisfrontend.domain.dto.UserDto;
 import com.hisfrontend.view.staticContent.DefiniedView;
+import com.hisfrontend.view.staticContent.NavigatePanel;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
@@ -39,6 +41,9 @@ public class LoginPage extends VerticalLayout {
                 UI.getCurrent().setId(Long.toString(id));
                 if (UI.getCurrent().getId().isPresent()) {
                     restTemplate.put(UrlGenerator.userSignInURL(id), null);
+                    UserDto userDto = restTemplate.getForObject(UrlGenerator.getUser(id), UserDto.class);
+                    NavigatePanel.setUsernameLabel(new Label("Zalogowany: " + userDto.getName() + " " + userDto.getSurname()));
+
                 }
 
                 UI.getCurrent().navigate(MainMenu.class);
