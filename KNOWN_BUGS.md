@@ -1,0 +1,2 @@
+1. klasa NavigatePanel -> pole usernameLabel; -> jest puste co powoduje przy odświeżaniu crash
+Zachowanie w sumie ok bo nie pozwala chodzić bez zalogowania po stronach przy odświeżeniu. Aczkolwiek można rozwiązać lepiej.
