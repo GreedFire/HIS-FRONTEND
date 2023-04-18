@@ -8,6 +8,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -118,6 +119,7 @@ public class RejestracjaPage extends VerticalLayout {
                         });
                 List<PatientDto> list = responseList.getBody();
                 grid.setItems(list);
+
             }
             else {
                 LOGGER.info("Failed to register patient");
