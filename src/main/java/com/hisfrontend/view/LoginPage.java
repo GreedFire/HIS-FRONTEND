@@ -36,6 +36,16 @@ public class LoginPage extends VerticalLayout {
         loginBtn.addClickListener(event -> {
             LOGGER.info("Próba zalogowania");
 
+            //TYMCZASOWE LOGOWANIE - DO USUNIĘCIA POTEM
+            LOGGER.info("TESTOWE LOGOWANIE");
+            UI.getCurrent().setId(Long.toString(1));
+            NavigatePanel.setUsernameLabel(new Label("Zalogowany: " + "TEST"+ " " + "TEST"));
+            UI.getCurrent().navigate(MainMenu.class);
+            //
+
+
+            /* DO ODKOMENTOWANIA
+
             Long id = restTemplate.getForObject(UrlGenerator.getUserIdURL(usernameField.getValue(), passwordField.getValue()), Long.class);
             if (id != null) {
                 UI.getCurrent().setId(Long.toString(id));
@@ -52,7 +62,11 @@ public class LoginPage extends VerticalLayout {
                 LOGGER.info("Login failed - username:  " + usernameField.getValue());
                 Notification.show("Nie udało się zalogować");
             }
+
+             */
         });
+
+
     }
 
     private void addStyle(){
