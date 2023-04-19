@@ -17,6 +17,6 @@ public class PatientDto {
     private String sex;
     private String status;
     private LocalDateTime registrationDate;
-    private LocalDateTime registeredOnDate;
+    private LocalDateTime scheduledDate;
 
 }

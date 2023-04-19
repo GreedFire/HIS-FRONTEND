@@ -9,6 +9,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.slf4j.Logger;
@@ -22,20 +23,29 @@ public class LoginPage extends VerticalLayout {
     private RestTemplate restTemplate;
     Label hisLabel = new Label("HIS SYSTEM");
     TextField usernameField = new TextField("Username: ");
-    TextField passwordField = new TextField("Password: ");
+    PasswordField passwordField = new PasswordField("Password: ");
     Button loginBtn = new Button("ZALOGUJ");
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
     public LoginPage() {
         addStyle();
         add(hisLabel, usernameField, passwordField, loginBtn, DefiniedView.drawFooter());
-
         loginBtnLogic();
+
+        //===================================================================================================
+        //TYMCZASOWE LOGOWANIE - DO USUNIĘCIA POTEM
+        //===================================================================================================
+        addAttachListener(e -> {
+            LOGGER.info("TESTOWE LOGOWANIE");
+            UI.getCurrent().setId(Long.toString(1));
+            NavigatePanel.setUsernameLabel(new Label("Zalogowany: " + "Użytkownik"+ " " + "Testowy"));
+            UI.getCurrent().navigate(MainMenu.class);
+        });
+        //===================================================================================================
     }
 
     private void loginBtnLogic(){
         loginBtn.addClickListener(event -> {
             LOGGER.info("Próba zalogowania");
-
             Long id = restTemplate.getForObject(UrlGenerator.getUserIdURL(usernameField.getValue(), passwordField.getValue()), Long.class);
             if (id != null) {
                 UI.getCurrent().setId(Long.toString(id));
@@ -43,7 +53,6 @@ public class LoginPage extends VerticalLayout {
                     restTemplate.put(UrlGenerator.userSignInURL(id), null);
                     UserDto userDto = restTemplate.getForObject(UrlGenerator.getUser(id), UserDto.class);
                     NavigatePanel.setUsernameLabel(new Label("Zalogowany: " + userDto.getName() + " " + userDto.getSurname()));
-
                 }
 
                 UI.getCurrent().navigate(MainMenu.class);
@@ -53,6 +62,8 @@ public class LoginPage extends VerticalLayout {
                 Notification.show("Nie udało się zalogować");
             }
         });
+
+
     }
 
     private void addStyle(){
