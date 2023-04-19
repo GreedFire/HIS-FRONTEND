@@ -14,10 +14,10 @@ import com.vaadin.flow.router.Route;
 public class MainMenu extends VerticalLayout {
     private static final String PAGE_NAME = "MENU";
 
-    private Button gabinetBtn = new Button("Office");
-    private Button rejestracjaBtn = new Button("Registration");
-    private Button panelAdministracyjnyBtn = new Button("Administration panel");
-    private HorizontalLayout menuLayout = new HorizontalLayout();
+    private final Button gabinetBtn = new Button("Office");
+    private final Button rejestracjaBtn = new Button("Registration");
+    private final Button panelAdministracyjnyBtn = new Button("Administration panel");
+    private final HorizontalLayout menuLayout = new HorizontalLayout();
 
     public MainMenu(){
         buttonsLogic();

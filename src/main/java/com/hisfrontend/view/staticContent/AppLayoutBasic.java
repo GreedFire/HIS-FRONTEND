@@ -2,23 +2,19 @@ package com.hisfrontend.view.staticContent;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 public class AppLayoutBasic {
-    private static AppLayout appLayout;
     private static Label pageNameLabel;
     private static Label usernameLabel;
 
     public static AppLayout drawAppLayout(String pageName){
-        appLayout = new AppLayout();
+        AppLayout appLayout = new AppLayout();
         H1 title = new H1("HIS SYSTEM");
         pageNameLabel = new Label(pageName);
         navigatePanelStyles();
@@ -38,7 +34,7 @@ public class AppLayoutBasic {
     }
 
     private static Button darkModeButton(){
-        Button toggleButton = new Button("Dark mode", click -> {
+        return new Button("Dark mode", click -> {
             ThemeList themeList = UI.getCurrent().getElement().getThemeList();
 
             if (themeList.contains(Lumo.DARK)) {
@@ -47,7 +43,6 @@ public class AppLayoutBasic {
                 themeList.add(Lumo.DARK);
             }
         });
-        return toggleButton;
     }
 
     public static void setUsernameLabel(Label usernameLabel) {

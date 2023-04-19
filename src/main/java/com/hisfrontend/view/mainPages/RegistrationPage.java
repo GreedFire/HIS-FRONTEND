@@ -51,9 +51,9 @@ public class RegistrationPage extends VerticalLayout{
     private Grid<PatientDto> grid;
 
     public RegistrationPage(){
-        initFields();
+        initClassFields();
         add(AppLayoutBasic.drawAppLayout(PAGE_NAME));
-        dialogLogic();
+        registerDialogLogic();
         drawPatientListView();
         drawMenuBar();
     }
@@ -76,7 +76,7 @@ public class RegistrationPage extends VerticalLayout{
         gridFunctionality(patientDtoList);
     }
 
-    private void dialogLogic(){
+    private void registerDialogLogic(){
         //HTML
         Button closeButton = new Button(new Icon("lumo", "cross"), e -> registerDialog.close());
         registerDialog.setHeaderTitle("PATIENT REGISTRATION");
@@ -147,21 +147,12 @@ public class RegistrationPage extends VerticalLayout{
     }
 
     private Span createStatusBadge(String status) {
-        String theme;
-        switch (status) {
-            case "registered":
-                theme = "badge contrast";
-                break;
-            case "admitted":
-                theme = "badge success";
-                break;
-            case "canceled":
-                theme = "badge error";
-                break;
-            default:
-                theme = "badge";
-                break;
-        }
+        String theme = switch (status) {
+            case "registered" -> "badge contrast";
+            case "admitted" -> "badge success";
+            case "canceled" -> "badge error";
+            default -> "badge";
+        };
         Span badge = new Span(status);
         badge.getElement().getThemeList().add(theme);
         return badge;
@@ -260,7 +251,7 @@ public class RegistrationPage extends VerticalLayout{
         this.restTemplate = restTemplate;
     }
 
-    private void initFields(){
+    private void initClassFields(){
         grid = new Grid<>(PatientDto.class, false);
         topMenu = new HorizontalLayout();
         registerDialog = new Dialog();
