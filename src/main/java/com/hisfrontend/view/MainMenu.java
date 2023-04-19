@@ -1,9 +1,9 @@
 package com.hisfrontend.view;
 
-import com.hisfrontend.view.mainPages.GabinetPage;
-import com.hisfrontend.view.mainPages.RejestracjaPage;
-import com.hisfrontend.view.mainPages.PanelAdministracyjnyPage;
-import com.hisfrontend.view.staticContent.NavigatePanel;
+import com.hisfrontend.view.mainPages.OfficePage;
+import com.hisfrontend.view.mainPages.RegistrationPage;
+import com.hisfrontend.view.mainPages.AdministrationPanelPage;
+import com.hisfrontend.view.staticContent.AppLayoutBasic;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -14,16 +14,16 @@ import com.vaadin.flow.router.Route;
 public class MainMenu extends VerticalLayout {
     private static final String PAGE_NAME = "MENU";
 
-    private Button gabinetBtn = new Button("Gabinet");
-    private Button rejestracjaBtn = new Button("Rejestracja");
-    private Button panelAdministracyjnyBtn = new Button("Panel Administracyjny");
+    private Button gabinetBtn = new Button("Office");
+    private Button rejestracjaBtn = new Button("Registration");
+    private Button panelAdministracyjnyBtn = new Button("Administration panel");
     private HorizontalLayout menuLayout = new HorizontalLayout();
 
     public MainMenu(){
         buttonsLogic();
         menuStyles();
         menuLayout.add(rejestracjaBtn, gabinetBtn, panelAdministracyjnyBtn);
-        add(NavigatePanel.drawNavigatePanel(PAGE_NAME), menuLayout);
+        add(AppLayoutBasic.drawAppLayout(PAGE_NAME), menuLayout);
 
     }
 
@@ -38,8 +38,8 @@ public class MainMenu extends VerticalLayout {
     }
 
     private void buttonsLogic(){
-        gabinetBtn.addClickListener(e -> UI.getCurrent().navigate(GabinetPage.class));
-        rejestracjaBtn.addClickListener(e -> UI.getCurrent().navigate(RejestracjaPage.class));
-        panelAdministracyjnyBtn.addClickListener(e -> UI.getCurrent().navigate(PanelAdministracyjnyPage.class));
+        gabinetBtn.addClickListener(e -> UI.getCurrent().navigate(OfficePage.class));
+        rejestracjaBtn.addClickListener(e -> UI.getCurrent().navigate(RegistrationPage.class));
+        panelAdministracyjnyBtn.addClickListener(e -> UI.getCurrent().navigate(AdministrationPanelPage.class));
     }
 }

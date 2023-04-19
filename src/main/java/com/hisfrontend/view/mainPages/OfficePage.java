@@ -1,23 +1,20 @@
 package com.hisfrontend.view.mainPages;
 
-import com.hisfrontend.view.staticContent.NavigatePanel;
+import com.hisfrontend.view.staticContent.AppLayoutBasic;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
-@Route("/Gabinet")
-public class GabinetPage extends VerticalLayout {
-    private static final String PAGE_NAME = "GABINET";
+@Route("/Office")
+public class OfficePage extends VerticalLayout {
+    private static final String PAGE_NAME = "OFFICE";
 
     private Button takeOnPatientBtn = new Button("Przyjmij");
     private HorizontalLayout bottomMenu = new HorizontalLayout();
-    public GabinetPage(){
+    public OfficePage(){
         bottomMenu.add(takeOnPatientBtn);
-        add(NavigatePanel.drawNavigatePanel(PAGE_NAME), bottomMenu);
+        add(AppLayoutBasic.drawAppLayout(PAGE_NAME), bottomMenu);
         createStyles();
     }
 
