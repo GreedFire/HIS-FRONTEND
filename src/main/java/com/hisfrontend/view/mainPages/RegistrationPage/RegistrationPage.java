@@ -1,4 +1,4 @@
-package com.hisfrontend.view.mainPages;
+package com.hisfrontend.view.mainPages.RegistrationPage;
 
 import com.hisfrontend.UrlGenerator;
 import com.hisfrontend.domain.dto.PatientDto;
@@ -13,6 +13,8 @@ import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
+import com.vaadin.flow.component.grid.contextmenu.GridMenuItem;
 import com.vaadin.flow.component.grid.dataview.GridListDataView;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -159,32 +161,43 @@ public class RegistrationPage extends VerticalLayout{
     }
     private void gridFunctionality(List<PatientDto> list){
         GridListDataView<PatientDto> dataView = grid.setItems(list);
+        grid.setColumnReorderingAllowed(true);
+        PatientContextMenu contextMenu = new PatientContextMenu(grid);
+
         Grid.Column<PatientDto> statusColumn = grid
                 .addComponentColumn(patient -> createStatusBadge(patient.getStatus()))
                 .setHeader("Status")
                 .setFooter(String.format("%s items", list.size()))
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> scheduledDateColumn = grid.addColumn(new LocalDateTimeRenderer<>(PatientDto::getScheduledDate,"dd/MM/YYYY HH:mm"))
                 .setHeader("Scheduled Date")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> firstnameColumn = grid.addColumn(PatientDto::getFirstname)
                 .setHeader("Firstname")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> surnameColumn = grid.addColumn(PatientDto::getSurname)
                 .setHeader("Lastname")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> peselColumn = grid.addColumn(PatientDto::getPesel)
                 .setHeader("PESEL")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> idColumn = grid.addColumn(PatientDto::getId)
                 .setHeader("Patient ID")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> sexColumn = grid.addColumn(PatientDto::getSex)
                 .setHeader("Sex")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<PatientDto> registrationDateColumn = grid.addColumn(new LocalDateTimeRenderer<>(PatientDto::getRegistrationDate,"dd/MM/YYYY HH:mm"))
                 .setHeader("Registration Date")
-                .setSortable(true);
+                .setSortable(true)
+                .setResizable(true);
 
         Button showColumnsButton = new Button("Show/Hide columns");
         showColumnsButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -206,8 +219,6 @@ public class RegistrationPage extends VerticalLayout{
                 registrationDateColumn);
         columnToggleContextMenu.addColumnToggleItem("Scheduled Date",
                 scheduledDateColumn);
-
-
 
         TextField searchField = new TextField();
         searchField.setPlaceholder("Name, PESEL");
@@ -255,6 +266,21 @@ public class RegistrationPage extends VerticalLayout{
         grid = new Grid<>(PatientDto.class, false);
         topMenu = new HorizontalLayout();
         registerDialog = new Dialog();
+    }
+
+    private static class PatientContextMenu extends GridContextMenu<PatientDto> {
+        private Dialog editPatientDialog = new Dialog();
+        public PatientContextMenu(Grid<PatientDto> target) {
+            super(target);
+
+            addItem("Edit", e -> e.getItem().ifPresent(PatientDto -> {
+                editPatientDialog.setHeaderTitle("Edit Dialog");
+                editPatientDialog.open();
+            }));
+            addItem("Delete", e -> e.getItem().ifPresent(PatientDto -> {
+                // System.out.printf("Delete: %s%n", person.getFullName());
+            }));
+        }
     }
 }
 

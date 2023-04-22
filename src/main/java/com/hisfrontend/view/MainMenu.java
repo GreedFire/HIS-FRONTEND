@@ -1,7 +1,7 @@
 package com.hisfrontend.view;
 
 import com.hisfrontend.view.mainPages.OfficePage;
-import com.hisfrontend.view.mainPages.RegistrationPage;
+import com.hisfrontend.view.mainPages.RegistrationPage.RegistrationPage;
 import com.hisfrontend.view.mainPages.AdministrationPanelPage;
 import com.hisfrontend.view.staticContent.AppLayoutBasic;
 import com.vaadin.flow.component.UI;
