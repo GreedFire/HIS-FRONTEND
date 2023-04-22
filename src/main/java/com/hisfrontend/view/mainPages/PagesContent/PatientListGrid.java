@@ -45,16 +45,24 @@ public class PatientListGrid extends VerticalLayout {
         gridColumnsSetup(patientDtoList);
     }
 
+    public void updateList(){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<PatientDto>> responseList = restTemplate.exchange(
+                UrlGenerator.GET_PATIENTS, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
+                });
+        List<PatientDto> list = responseList.getBody();
+        this.getGrid().setItems(list);
+        grid.getColumnByKey("Status").setFooter(String.format("%s items", list.size()));
+    }
+
     private void gridColumnsSetup(List<PatientDto> list){
         Grid.Column<PatientDto> statusColumn = grid
                 .addComponentColumn(patient -> createStatusBadge(patient.getStatus()))
                 .setHeader("Status")
                 .setSortable(true)
-                .setResizable(true);
-
-//        if(list.isEmpty())
-//            statusColumn = grid.getColumnByKey("Status").setFooter(String.format("%s items", 0));
-//        else grid.getColumnByKey("Status").setFooter(String.format("%s items", list.size()));
+                .setResizable(true)
+                .setKey("Status")
+                .setFooter(String.format("%s items", list.size()));
 
 
         Grid.Column<PatientDto> scheduledDateColumn = grid.addColumn(new LocalDateTimeRenderer<>(PatientDto::getScheduledDate,"dd/MM/YYYY HH:mm"))
@@ -157,8 +165,8 @@ public class PatientListGrid extends VerticalLayout {
             super(target);
 
             addItem("Edit", e -> e.getItem().ifPresent(PatientDto -> {
-                editPatientDialog.setHeaderTitle("Edit Dialog");
-                editPatientDialog.open();
+                //   editPatientDialog.setHeaderTitle("Edit Dialog");
+                //    editPatientDialog.open();
             }));
             addItem("Delete", e -> e.getItem().ifPresent(PatientDto -> {
                 // System.out.printf("Delete: %s%n", person.getFullName());
