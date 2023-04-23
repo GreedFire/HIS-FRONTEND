@@ -61,8 +61,6 @@ public class RegistrationPage extends VerticalLayout{
     private void initClassFields(){
         this.patientListGrid = new PatientListGrid();
         this.registerDialog = new PatientRegisterDialog(patientListGrid);
-
-
     }
 }
 

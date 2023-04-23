@@ -9,6 +9,7 @@ public class UrlGenerator {
     public final static String GET_PATIENTS = "http://localhost:9090/his/patients/getPatients";
 
     public final static String UPDATE_PATIENT = "http://localhost:9090/his/patients/updatePatient";
+    public final static String GET_USERS = "http://localhost:9090/his/users/getUsers";
 
     public static URI patientDeleteURL(long id){
         return UriComponentsBuilder.fromHttpUrl("http://localhost:9090/his/patients/deletePatient")
