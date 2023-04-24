@@ -1,6 +1,6 @@
-package com.hisfrontend.view.mainPages;
+package com.hisfrontend.view;
 
-import com.hisfrontend.view.staticContent.AppLayoutBasic;
+import com.hisfrontend.view.PagesContent.AppLayoutBasic;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 

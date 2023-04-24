@@ -1,4 +1,4 @@
-package com.hisfrontend.view.mainPages.PagesContent;
+package com.hisfrontend.view.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
 import com.hisfrontend.domain.dto.UserDto;
@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class UserDeleteDialog extends Dialog{
     private final RestTemplate restTemplate = new RestTemplate();
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDeleteDialog.class);
 
     public UserDeleteDialog(UserListGrid userListGrid, UserDto userDto) {
             //Dialog Header

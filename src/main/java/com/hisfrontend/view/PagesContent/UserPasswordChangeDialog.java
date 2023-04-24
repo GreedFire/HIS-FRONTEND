@@ -1,4 +1,4 @@
-package com.hisfrontend.view.mainPages.PagesContent;
+package com.hisfrontend.view.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
 import com.hisfrontend.domain.dto.UserDto;
@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class UserPasswordChangeDialog extends Dialog {
     private final RestTemplate restTemplate = new RestTemplate();
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserPasswordChangeDialog.class);
     private final Binder<UserDto> binder = new Binder<>();
     PasswordField passwordNewField = new PasswordField("New Password");
     PasswordField passwordConfirmField = new PasswordField("Confirm Password");

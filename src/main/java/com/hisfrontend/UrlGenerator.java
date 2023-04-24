@@ -7,7 +7,6 @@ import java.net.URI;
 public class UrlGenerator {
     public final static String REGISTER_PATIENT = "http://localhost:9090/his/patients/register";
     public final static String GET_PATIENTS = "http://localhost:9090/his/patients/getPatients";
-
     public final static String UPDATE_PATIENT = "http://localhost:9090/his/patients/updatePatient";
     public final static String GET_USERS = "http://localhost:9090/his/users/getUsers";
     public final static String CREATE_USER = "http://localhost:9090/his/users/create";

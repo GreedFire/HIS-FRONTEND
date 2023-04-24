@@ -1,8 +1,8 @@
-package com.hisfrontend.view.mainPages;
+package com.hisfrontend.view;
 
 import com.hisfrontend.domain.dto.UserDto;
-import com.hisfrontend.view.mainPages.PagesContent.*;
-import com.hisfrontend.view.staticContent.AppLayoutBasic;
+import com.hisfrontend.view.PagesContent.*;
+import com.hisfrontend.view.PagesContent.AppLayoutBasic;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.contextmenu.MenuItem;
