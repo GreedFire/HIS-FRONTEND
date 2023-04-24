@@ -29,33 +29,34 @@ import java.util.List;
 public class UserListGrid extends VerticalLayout{
     private final Grid<UserDto> grid = new Grid<>(UserDto.class, false);
     private final HorizontalLayout topMenu = new HorizontalLayout();
+    private final RestTemplate restTemplate = new RestTemplate();
+    private List<UserDto> userDtoList;
 
     public UserListGrid(){
         drawUserListView();
     }
     private void drawUserListView(){
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<UserDto>> responseList = restTemplate.exchange(
-                UrlGenerator.GET_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
-                });
-        List<UserDto> userDtoList = responseList.getBody();
+        getUserList();
         gridFunctionality(userDtoList);
         gridColumnsSetup(userDtoList);
     }
 
-    public void updateList(){
-        RestTemplate restTemplate = new RestTemplate();
+    public void getUserList(){
         ResponseEntity<List<UserDto>> responseList = restTemplate.exchange(
                 UrlGenerator.GET_USERS, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
                 });
-        List<UserDto> list = responseList.getBody();
-        this.getGrid().setItems(list);
-        grid.getColumnByKey("Status").setFooter(String.format("%s items", list.size()));
+        this.userDtoList = responseList.getBody();
+        this.getGrid().setItems(userDtoList);
+    }
+    public void updateList(){
+        getUserList();
+        this.grid.getColumnByKey("id").setFooter(String.format("%s items", userDtoList.size()));
     }
 
     private void gridColumnsSetup(List<UserDto> list){
         Grid.Column<UserDto> idColumn = grid.addColumn(UserDto::getId)
                 .setHeader("User ID")
+                .setKey("id")
                 .setSortable(true)
                 .setResizable(true)
                 .setFooter(String.format("%s items", list.size()));

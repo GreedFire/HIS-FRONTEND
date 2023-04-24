@@ -23,12 +23,12 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class PatientUpdateDialog extends Dialog{
+public class PatientEditDialog extends Dialog{
     private final RestTemplate restTemplate = new RestTemplate();
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
     private final Binder<PatientDto> binder = new Binder<>();
 
-        public PatientUpdateDialog(PatientListGrid patientListGrid, PatientDto patientDto) {
+        public PatientEditDialog(PatientListGrid patientListGrid, PatientDto patientDto) {
             //Dialog Header
             Button closeButton = new Button(new Icon("lumo", "cross"), e -> this.close());
             this.setHeaderTitle("PATIENT EDIT");

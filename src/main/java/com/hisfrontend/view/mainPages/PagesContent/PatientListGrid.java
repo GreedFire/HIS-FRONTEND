@@ -29,30 +29,31 @@ import java.util.List;
 
 @Getter
 public class PatientListGrid extends VerticalLayout {
+    private final RestTemplate restTemplate = new RestTemplate();
     private final Grid<PatientDto> grid = new Grid<>(PatientDto.class, false);
     private final HorizontalLayout topMenu = new HorizontalLayout();
+    private List<PatientDto> patientDtoList;
 
     public PatientListGrid(){
         drawPatientListView();
     }
     private void drawPatientListView(){
-        RestTemplate restTemplate = new RestTemplate();
+        getPatientList();
+        gridColumnsSetup(patientDtoList);
+        gridFunctionality(patientDtoList);
+    }
+
+    public void getPatientList(){
         ResponseEntity<List<PatientDto>> responseList = restTemplate.exchange(
                 UrlGenerator.GET_PATIENTS, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
                 });
-        List<PatientDto> patientDtoList = responseList.getBody();
-        gridFunctionality(patientDtoList);
-        gridColumnsSetup(patientDtoList);
+        this.patientDtoList = responseList.getBody();
+        this.grid.setItems(patientDtoList);
     }
 
     public void updateList(){
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<PatientDto>> responseList = restTemplate.exchange(
-                UrlGenerator.GET_PATIENTS, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
-                });
-        List<PatientDto> list = responseList.getBody();
-        this.getGrid().setItems(list);
-        grid.getColumnByKey("Status").setFooter(String.format("%s items", list.size()));
+        getPatientList();
+        this.grid.getColumnByKey("Status").setFooter(String.format("%s items", patientDtoList.size()));
     }
 
     private void gridColumnsSetup(List<PatientDto> list){
