@@ -1,7 +1,6 @@
 package com.hisfrontend.view.mainPages.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
-import com.hisfrontend.domain.dto.PatientDto;
 import com.hisfrontend.domain.dto.UserDto;
 import com.hisfrontend.view.LoginPage;
 import com.vaadin.flow.component.button.Button;
@@ -9,7 +8,6 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
@@ -21,11 +19,11 @@ public class UserDeleteDialog extends Dialog{
     public UserDeleteDialog(UserListGrid userListGrid, UserDto userDto) {
             //Dialog Header
             Button closeButton = new Button(new Icon("lumo", "cross"), e -> this.close());
-            this.setHeaderTitle("USER DELETION");
+            this.setHeaderTitle("USER DELETE");
             this.getHeader().add(closeButton);
 
             //HTML Elements
-            Label deletionQuestionLabel = new Label("You want to delete user " + userDto.getName()
+            Label deletionQuestionLabel = new Label("You want to delete user: " + userDto.getName()
                     + " " + userDto.getSurname() + ". Are you sure?");
             Button yesButton = new Button("YES");
             Button noButton = new Button("NO");

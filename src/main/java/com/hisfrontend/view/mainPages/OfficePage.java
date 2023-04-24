@@ -11,6 +11,5 @@ public class OfficePage extends VerticalLayout {
     public OfficePage(){
         add(AppLayoutBasic.drawAppLayout(PAGE_NAME));
 
-
     }
 }

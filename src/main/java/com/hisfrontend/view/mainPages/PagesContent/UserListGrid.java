@@ -1,7 +1,6 @@
 package com.hisfrontend.view.mainPages.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
-import com.hisfrontend.domain.dto.PatientDto;
 import com.hisfrontend.domain.dto.UserDto;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -10,7 +9,6 @@ import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.dataview.GridListDataView;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -60,6 +58,11 @@ public class UserListGrid extends VerticalLayout{
                 .setSortable(true)
                 .setResizable(true)
                 .setFooter(String.format("%s items", list.size()));
+        Grid.Column<UserDto> onlineColumn = grid
+                .addComponentColumn(user -> createStatusIcon(user.isSignedIn()))
+                .setHeader("Online")
+                .setSortable(true)
+                .setResizable(true);
         Grid.Column<UserDto> usernameColumn = grid.addColumn(UserDto::getUsername)
                 .setHeader("Username")
                 .setSortable(true)
@@ -72,11 +75,7 @@ public class UserListGrid extends VerticalLayout{
                 .setHeader("Lastname")
                 .setSortable(true)
                 .setResizable(true);
-//        Grid.Column<UserDto> loggedColumn = grid
-//                .addComponentColumn(user -> createStatusBadge(toString()user.isSignedIn()))
-//                .setHeader("Logged in")
-//                .setSortable(true)
-//                .setResizable(true);
+
 
 
         Button showColumnsButton = new Button("Show/Hide columns");
@@ -86,14 +85,15 @@ public class UserListGrid extends VerticalLayout{
                 showColumnsButton);
         columnToggleContextMenu.addColumnToggleItem("User ID",
                 idColumn);
+        columnToggleContextMenu.addColumnToggleItem("Online",
+                onlineColumn);
         columnToggleContextMenu.addColumnToggleItem("Username",
                 usernameColumn);
         columnToggleContextMenu.addColumnToggleItem("Firstname",
                 firstnameColumn);
         columnToggleContextMenu.addColumnToggleItem("Lastname",
                 lastnameColumn);
-//        columnToggleContextMenu.addColumnToggleItem("Logged in",
-//                loggedColumn);
+
 
         topMenu.add(showColumnsButton);
     }
@@ -125,14 +125,17 @@ public class UserListGrid extends VerticalLayout{
         return value.toLowerCase().contains(searchTerm.toLowerCase());
     }
 
-    private Span createStatusBadge(String status) {
-        String theme = switch (status) {
-            case "true" -> "badge success";
-            default -> "badge error";
-        };
-        Span badge = new Span(status);
-        badge.getElement().getThemeList().add(theme);
-        return badge;
+    private Icon createStatusIcon(boolean status) {
+        Icon icon;
+        if (status) {
+            icon = VaadinIcon.CHECK.create();
+            icon.getElement().getThemeList().add("badge success");
+        } else {
+            icon = VaadinIcon.CLOSE_SMALL.create();
+            icon.getElement().getThemeList().add("badge error");
+        }
+        icon.getStyle().set("padding", "var(--lumo-space-xs");
+        return icon;
     }
 
     private static class ColumnToggleContextMenu extends ContextMenu {

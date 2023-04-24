@@ -7,9 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.contextmenu.MenuItem;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.grid.dataview.GridListDataView;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -122,7 +120,6 @@ public class PatientListGrid extends VerticalLayout {
     private void gridFunctionality(List<PatientDto> list){
         GridListDataView<PatientDto> dataView = grid.setItems(list);
         grid.setColumnReorderingAllowed(true);
-        new PatientListGrid.PatientContextMenu(grid);
 
         TextField searchField = new TextField();
         searchField.setPlaceholder("Name, PESEL");
@@ -158,21 +155,6 @@ public class PatientListGrid extends VerticalLayout {
 
     private boolean matchesTerm(String value, String searchTerm) {
         return value.toLowerCase().contains(searchTerm.toLowerCase());
-    }
-
-    private static class PatientContextMenu extends GridContextMenu<PatientDto> {
-        private final Dialog editPatientDialog = new Dialog();
-        public PatientContextMenu(Grid<PatientDto> target) {
-            super(target);
-
-            addItem("Edit", e -> e.getItem().ifPresent(PatientDto -> {
-                //   editPatientDialog.setHeaderTitle("Edit Dialog");
-                //    editPatientDialog.open();
-            }));
-            addItem("Delete", e -> e.getItem().ifPresent(PatientDto -> {
-                // System.out.printf("Delete: %s%n", person.getFullName());
-            }));
-        }
     }
 
     private static class ColumnToggleContextMenu extends ContextMenu {
