@@ -12,6 +12,7 @@ public class UrlGenerator {
     public final static String GET_USERS = "http://localhost:9090/his/users/getUsers";
     public final static String CREATE_USER = "http://localhost:9090/his/users/create";
     public final static String UPDATE_USER = "http://localhost:9090/his/users/updateUser";
+    public final static String UPDATE_USER_PASSWORD = "http://localhost:9090/his/users/updateUserPassword";
 
 
     public static URI patientDeleteURL(long id){

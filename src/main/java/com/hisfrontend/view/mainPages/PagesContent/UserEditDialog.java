@@ -1,12 +1,9 @@
 package com.hisfrontend.view.mainPages.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
-import com.hisfrontend.domain.dto.PatientDto;
 import com.hisfrontend.domain.dto.UserDto;
 import com.hisfrontend.view.LoginPage;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.icon.Icon;
@@ -20,9 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 public class UserEditDialog extends Dialog{
     private final RestTemplate restTemplate = new RestTemplate();

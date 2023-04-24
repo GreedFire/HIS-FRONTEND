@@ -1,6 +1,5 @@
 package com.hisfrontend.view.mainPages;
 
-import com.hisfrontend.domain.dto.PatientDto;
 import com.hisfrontend.domain.dto.UserDto;
 import com.hisfrontend.view.mainPages.PagesContent.*;
 import com.hisfrontend.view.staticContent.AppLayoutBasic;
@@ -13,7 +12,6 @@ import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.Route;
-import org.apache.catalina.User;
 
 @Route("/AdministrationPanel")
 public class AdministrationPanelPage extends VerticalLayout {
@@ -21,6 +19,7 @@ public class AdministrationPanelPage extends VerticalLayout {
     private Dialog createDialog;
     private Dialog deleteDialog;
     private Dialog editDialog;
+    private Dialog passwordChangeDialog;
     private UserListGrid userListGrid;
     public AdministrationPanelPage(){
         initClassFields();
@@ -55,10 +54,20 @@ public class AdministrationPanelPage extends VerticalLayout {
             }
         });
 
+        ComponentEventListener<ClickEvent<MenuItem>> passwordButtonListener = (e -> {
+            SingleSelect<Grid<UserDto>, UserDto> userSelect = userListGrid.getGrid().asSingleSelect();
+            UserDto userDto = userSelect.getValue();
+            if(!userSelect.isEmpty()) {
+                this.passwordChangeDialog = new UserPasswordChangeDialog(userListGrid, userDto);
+                this.passwordChangeDialog.open();
+            }
+        });
+
         MenuBar menuBar = new MenuBar();
         menuBar.addItem("Create", registerButtonListener);
         menuBar.addItem("Edit", editButtonListener);
         menuBar.addItem("Delete", deleteButtonListener);
+        menuBar.addItem("Password Change", passwordButtonListener);
         add(menuBar);
     }
 }

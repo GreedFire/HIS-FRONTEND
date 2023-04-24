@@ -9,15 +9,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.client.RestTemplate;
 
 @Route("/")
 public class LoginPage extends VerticalLayout {
-    @Autowired
-    private RestTemplate restTemplate;
-    private LoginOverlay loginOverlay;
-    private LoginForm loginForm;
+    private final LoginOverlay loginOverlay;
+    private final LoginForm loginForm;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
     public LoginPage() {
