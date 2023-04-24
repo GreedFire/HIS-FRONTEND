@@ -1,9 +1,6 @@
 package com.hisfrontend.view;
 
-import com.hisfrontend.view.mainPages.OfficePage;
-import com.hisfrontend.view.mainPages.RegistrationPage;
-import com.hisfrontend.view.mainPages.AdministrationPanelPage;
-import com.hisfrontend.view.staticContent.AppLayoutBasic;
+import com.hisfrontend.view.PagesContent.AppLayoutBasic;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,7 +10,6 @@ import com.vaadin.flow.router.Route;
 @Route("/MainMenu")
 public class MainMenu extends VerticalLayout {
     private static final String PAGE_NAME = "MENU";
-
     private final Button gabinetBtn = new Button("Office");
     private final Button rejestracjaBtn = new Button("Registration");
     private final Button panelAdministracyjnyBtn = new Button("Administration panel");

@@ -1,11 +1,11 @@
-package com.hisfrontend.view.mainPages;
+package com.hisfrontend.view;
 
 import com.hisfrontend.domain.dto.PatientDto;
-import com.hisfrontend.view.mainPages.PagesContent.PatientDeleteDialog;
-import com.hisfrontend.view.mainPages.PagesContent.PatientRegisterDialog;
-import com.hisfrontend.view.mainPages.PagesContent.PatientListGrid;
-import com.hisfrontend.view.mainPages.PagesContent.PatientEditDialog;
-import com.hisfrontend.view.staticContent.AppLayoutBasic;
+import com.hisfrontend.view.PagesContent.PatientDeleteDialog;
+import com.hisfrontend.view.PagesContent.PatientRegisterDialog;
+import com.hisfrontend.view.PagesContent.PatientListGrid;
+import com.hisfrontend.view.PagesContent.PatientEditDialog;
+import com.hisfrontend.view.PagesContent.AppLayoutBasic;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.dialog.Dialog;

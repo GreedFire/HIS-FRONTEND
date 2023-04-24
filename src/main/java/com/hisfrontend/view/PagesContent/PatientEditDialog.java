@@ -1,4 +1,4 @@
-package com.hisfrontend.view.mainPages.PagesContent;
+package com.hisfrontend.view.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
 import com.hisfrontend.domain.dto.PatientDto;
@@ -23,15 +23,15 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class PatientRegisterDialog extends Dialog{
+public class PatientEditDialog extends Dialog{
     private final RestTemplate restTemplate = new RestTemplate();
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PatientEditDialog.class);
     private final Binder<PatientDto> binder = new Binder<>();
 
-        public PatientRegisterDialog(PatientListGrid patientListGrid) {
+        public PatientEditDialog(PatientListGrid patientListGrid, PatientDto patientDto) {
             //Dialog Header
             Button closeButton = new Button(new Icon("lumo", "cross"), e -> this.close());
-            this.setHeaderTitle("PATIENT REGISTRATION");
+            this.setHeaderTitle("PATIENT EDIT");
             this.getHeader().add(closeButton);
 
             //HTML Elements
@@ -40,7 +40,7 @@ public class PatientRegisterDialog extends Dialog{
             TextField peselField = new TextField("PESEL: ");
             DateTimePicker scheduledDateField = new DateTimePicker("Scheduled Date: ");
             ComboBox<String> sexField = new ComboBox<>("Sex: ");
-            Button registerDialogBtn = new Button("REGISTER");
+            Button registerDialogBtn = new Button("UPDATE");
 
             //Setting HTML elements
             scheduledDateField.setValue(LocalDateTime.now(ZoneId.systemDefault()));
@@ -49,6 +49,11 @@ public class PatientRegisterDialog extends Dialog{
             surnameField.setPlaceholder("Enter lastname");
             peselField.setPlaceholder("Enter PESEL");
             sexField.setPlaceholder("Pick sex");
+            firstnameField.setValue(patientDto.getFirstname());
+            surnameField.setValue(patientDto.getSurname());
+            peselField.setValue(patientDto.getPesel());
+            sexField.setValue(patientDto.getSex());
+            scheduledDateField.setValue(patientDto.getScheduledDate());
 
             //FormLayout
             FormLayout formLayout = new FormLayout();
@@ -62,7 +67,6 @@ public class PatientRegisterDialog extends Dialog{
             this.getFooter().add(registerDialogBtn);
 
             //BINDER
-            PatientDto patientDto = new PatientDto();
             binder.forField(firstnameField)
                     .withValidator(new StringLengthValidator(
                             "Invalid firstname length", 2, 30))
@@ -77,7 +81,6 @@ public class PatientRegisterDialog extends Dialog{
                     .bind(PatientDto::getSex, PatientDto::setSex);
             binder.forField(scheduledDateField)
                     .bind(PatientDto::getScheduledDate, PatientDto::setScheduledDate);
-            patientDto.setStatus("registered");
 
             //Button Logic
             registerButtonLogic(patientListGrid, patientDto, registerDialogBtn);
@@ -92,17 +95,17 @@ public class PatientRegisterDialog extends Dialog{
                     System.out.println("Failed to bind patient data in register dialog window: " + error);
                 }
                 HttpEntity<PatientDto> request = new HttpEntity<>(patientDto, new HttpHeaders());
-                LOGGER.info("Trying to register patient: " + patientDto);
-                Boolean registerValidator = restTemplate.postForObject(UrlGenerator.REGISTER_PATIENT, request, Boolean.class);
-                if(registerValidator && binder.validate().isOk()) {
-                    LOGGER.info("Patient Registered"  + patientDto);
-                    Notification.show("\n" + "Registration was successful!", 3000, Notification.Position.MIDDLE);
+                LOGGER.info("Trying to update patient: " + patientDto);
+                restTemplate.put(UrlGenerator.UPDATE_PATIENT, request);
+                if(binder.validate().isOk()) {
+                    LOGGER.info("Patient Updated: " + patientDto);
+                    Notification.show("\n" + "Patient data update was successful!", 3000, Notification.Position.MIDDLE);
                     this.close();
                     patientListGrid.updateList();
                 }
                 else {
-                    LOGGER.info("Failed to register patient"  + patientDto);
-                    Notification.show("There was a problem while registering. Please try again later.", 3000, Notification.Position.MIDDLE);
+                    LOGGER.info("Failed to update patient");
+                    Notification.show("There was a problem while updating patient. Please try again later.", 3000, Notification.Position.MIDDLE);
                 }
             });
         }

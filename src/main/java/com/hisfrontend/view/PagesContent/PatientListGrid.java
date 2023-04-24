@@ -1,4 +1,4 @@
-package com.hisfrontend.view.mainPages.PagesContent;
+package com.hisfrontend.view.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
 import com.hisfrontend.domain.dto.PatientDto;

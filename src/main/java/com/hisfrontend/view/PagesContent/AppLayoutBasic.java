@@ -1,4 +1,4 @@
-package com.hisfrontend.view.staticContent;
+package com.hisfrontend.view.PagesContent;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;

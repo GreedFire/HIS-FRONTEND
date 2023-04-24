@@ -1,6 +1,6 @@
 package com.hisfrontend.view;
 
-import com.hisfrontend.view.staticContent.AppLayoutBasic;
+import com.hisfrontend.view.PagesContent.AppLayoutBasic;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.login.LoginForm;

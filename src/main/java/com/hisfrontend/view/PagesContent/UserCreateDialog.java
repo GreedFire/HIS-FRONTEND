@@ -1,4 +1,4 @@
-package com.hisfrontend.view.mainPages.PagesContent;
+package com.hisfrontend.view.PagesContent;
 
 import com.hisfrontend.UrlGenerator;
 import com.hisfrontend.domain.dto.UserDto;
@@ -18,49 +18,45 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
-public class UserEditDialog extends Dialog{
+public class UserCreateDialog extends Dialog{
     private final RestTemplate restTemplate = new RestTemplate();
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserCreateDialog.class);
     private final Binder<UserDto> binder = new Binder<>();
 
-        public UserEditDialog(UserListGrid userListGrid, UserDto userDto) {
+        public UserCreateDialog(UserListGrid userListGrid) {
             //Dialog Header
             Button closeButton = new Button(new Icon("lumo", "cross"), e -> this.close());
-            this.setHeaderTitle("USER EDIT");
+            this.setHeaderTitle("USER CREATOR");
             this.getHeader().add(closeButton);
 
             //HTML Elements
-            TextField firstnameField = new TextField("Firstname: ");
-            TextField surnameField = new TextField("Lastname: ");
             TextField usernameField = new TextField("Username: ");
-            Button updateDialogBtn = new Button("UPDATE");
+            TextField firstnameField = new TextField("Firstname: ");
+            TextField lastnameField = new TextField("Lastname: ");
+            Button createDialogBtn = new Button("CREATE USER");
 
-            //Setting HTML elements
-
-            firstnameField.setPlaceholder("Enter firstname");
-            surnameField.setPlaceholder("Enter lastname");
+            //Setting HTML elements;
             usernameField.setPlaceholder("Enter username");
-            usernameField.setValue(userDto.getUsername());
-            surnameField.setValue(userDto.getSurname());
-            firstnameField.setValue(userDto.getName());
-
+            firstnameField.setPlaceholder("Enter firstname");
+            lastnameField.setPlaceholder("Enter lastname");
 
             //FormLayout
             FormLayout formLayout = new FormLayout();
-            formLayout.add(usernameField, firstnameField, surnameField);
+            formLayout.add(usernameField, firstnameField, lastnameField);
             formLayout.setResponsiveSteps(
                     new FormLayout.ResponsiveStep("0", 1),
                     new FormLayout.ResponsiveStep("500px", 3));
 
             this.add(formLayout);
-            this.getFooter().add(updateDialogBtn);
+            this.getFooter().add(createDialogBtn);
 
             //BINDER
+            UserDto userDto = new UserDto();
             binder.forField(firstnameField)
                     .withValidator(new StringLengthValidator(
                             "Invalid firstname length", 2, 30))
                     .bind(UserDto::getName, UserDto::setName);
-            binder.forField(surnameField)
+            binder.forField(lastnameField)
                     .withValidator(new StringLengthValidator(
                             "Invalid lastname length", 2, 30))
                     .bind(UserDto::getSurname, UserDto::setSurname);
@@ -68,31 +64,32 @@ public class UserEditDialog extends Dialog{
                     .withValidator(new StringLengthValidator(
                             "Invalid lastname length", 3, 30))
                     .bind(UserDto::getUsername, UserDto::setUsername);
+            userDto.setSignedIn(false);
 
             //Button Logic
-            updateButtonLogic(userListGrid, userDto, updateDialogBtn);
+            createButtonLogic(userListGrid, userDto, createDialogBtn);
         }
 
-        private void updateButtonLogic(UserListGrid userListGrid, UserDto userDto, Button actionButton){
+        private void createButtonLogic(UserListGrid userListGrid, UserDto userDto, Button actionButton){
             //LOGIC
             actionButton.addClickListener(e -> {
                 try {
                     binder.writeBean(userDto);
                 } catch (ValidationException error) {
-                    System.out.println("Failed to bind user data in update dialog window: " + error);
+                    System.out.println("Failed to bind user data in create dialog window: " + error);
                 }
                 HttpEntity<UserDto> request = new HttpEntity<>(userDto, new HttpHeaders());
-                LOGGER.info("Trying to update user: " + userDto);
-                restTemplate.put(UrlGenerator.UPDATE_USER, request);
-                if(binder.validate().isOk()) {
-                    LOGGER.info("User Updated: " + userDto);
-                    Notification.show("\n" + "User data update was successful!", 3000, Notification.Position.MIDDLE);
+                LOGGER.info("Trying to create user: " + userDto);
+                Boolean registerValidator = restTemplate.postForObject(UrlGenerator.CREATE_USER, request, Boolean.class);
+                if(registerValidator && binder.validate().isOk()) {
+                    LOGGER.info("User Registered: " + userDto);
+                    Notification.show("\n" + "User creation was successful!", 3000, Notification.Position.MIDDLE);
                     this.close();
                     userListGrid.updateList();
                 }
                 else {
-                    LOGGER.info("Failed to update user" + userDto);
-                    Notification.show("There was a problem while updating patient. Please try again later.", 3000, Notification.Position.MIDDLE);
+                    LOGGER.info("Failed to create user: " + userDto);
+                    Notification.show("There was a problem while registering. Please try again later.", 3000, Notification.Position.MIDDLE);
                 }
             });
         }
