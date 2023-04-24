@@ -95,13 +95,13 @@ public class PatientRegisterDialog extends Dialog{
                 LOGGER.info("Trying to register patient: " + patientDto);
                 Boolean registerValidator = restTemplate.postForObject(UrlGenerator.REGISTER_PATIENT, request, Boolean.class);
                 if(registerValidator && binder.validate().isOk()) {
-                    LOGGER.info("Patient Registered");
+                    LOGGER.info("Patient Registered"  + patientDto);
                     Notification.show("\n" + "Registration was successful!", 3000, Notification.Position.MIDDLE);
                     this.close();
                     patientListGrid.updateList();
                 }
                 else {
-                    LOGGER.info("Failed to register patient");
+                    LOGGER.info("Failed to register patient"  + patientDto);
                     Notification.show("There was a problem while registering. Please try again later.", 3000, Notification.Position.MIDDLE);
                 }
             });
